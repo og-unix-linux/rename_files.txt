@@ -1,0 +1,21 @@
+rename ACDC AC-DC ACDC*
+
+rename 's/ACDC/AC-DC/' *.xxx
+
+rename.ul ACDC AC-DC ACDC*
+
+Current directory:
+
+for file in ACDC*.xxx; do
+    mv "$file" "${file//ACDC/AC-DC}"
+done
+Including subdirectories:
+
+find . -type f -name "ACDC*" -print0 | while read -r -d '' file; do
+    mv "$file" "${file//ACDC/AC-DC}"
+done
+Newline characters are really unlikely to be in filenames, so this can be simpler while still working with names containing spaces:
+
+find . -type f -name "ACDC*" | while read -r file; do
+    mv "$file" "${file//ACDC/AC-DC}"
+done
